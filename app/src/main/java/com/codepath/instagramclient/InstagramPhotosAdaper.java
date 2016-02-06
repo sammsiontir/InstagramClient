@@ -43,6 +43,7 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
         ImageView ivPhoto;
         TextView tvLikes;
         TextView tvCaption;
+        ImageView ivLocationIcon;
     }
 
 
@@ -71,6 +72,7 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
             viewHolder.ivPhoto = (ImageView) convertView.findViewById(R.id.ivPhoto);
             viewHolder.tvLikes = (TextView) convertView.findViewById(R.id.tvLikes);
             viewHolder.tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
+            viewHolder.ivLocationIcon = (ImageView) convertView.findViewById(R.id.ivLocationIcon);
             convertView.setTag(viewHolder);
         }
         else {
@@ -81,6 +83,7 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
         viewHolder.tvUsername.setText(photo.username);
         viewHolder.tvLocation.setText("");
         if (photo.location.isEmpty()) {
+            // move username to center if there is no location information
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)viewHolder.tvUsername.getLayoutParams();
             params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
             params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, 0);
@@ -88,6 +91,12 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
             params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
             viewHolder.tvUsername.setLayoutParams(params);
         }
+        else {
+            // set location and location icon
+            viewHolder.ivLocationIcon.setImageResource(R.drawable.location);
+            viewHolder.tvLocation.setText(photo.location);
+        }
+
         CharSequence relativeTime = DateUtils.getRelativeTimeSpanString(photo.createTime*1000, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
         viewHolder.tvTime.setText(relativeTime);
         viewHolder.tvLikes.setText(Integer.toString(photo.likesCount)  + "  Likes");
@@ -123,6 +132,10 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
                 .fit().centerInside()
                 .transform(new CropSquareTransformation())
                 .into(ivPhoto);
+
+    }
+
+    public void setLocation() {
 
     }
 
