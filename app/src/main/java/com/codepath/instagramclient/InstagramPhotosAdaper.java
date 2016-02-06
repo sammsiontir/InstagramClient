@@ -80,7 +80,7 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
         }
 
         // Insert model data to each of the items
-        viewHolder.tvUsername.setText(photo.username);
+        viewHolder.tvUsername.setText(photo.user.username);
         viewHolder.tvLocation.setText("");
         if (photo.location.isEmpty()) {
             // move username to center if there is no location information
@@ -117,7 +117,7 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
                 .build();
 
         Picasso.with(getContext())
-                .load(photo.profilePictureUrl)
+                .load(photo.user.profilePictureUrl)
                 .fit()
                 .transform(transformation)
                 .into(ivProfilePicture);
@@ -128,14 +128,10 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
         ivPhoto.setImageResource(0);
         // Insert image view using picasso
         Picasso.with(getContext())
-                .load(photo.imageUrl)
+                .load(photo.image.url)
                 .fit().centerInside()
                 .transform(new CropSquareTransformation())
                 .into(ivPhoto);
-
-    }
-
-    public void setLocation() {
 
     }
 
