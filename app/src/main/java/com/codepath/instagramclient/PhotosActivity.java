@@ -103,7 +103,8 @@ public class PhotosActivity extends AppCompatActivity {
                         photo.likesCount = photoJSON.getJSONObject("likes").getInt("count");
                         // - Create time
                         photo.createTime = photoJSON.getLong("created_time");
-
+                        // - Location
+                        photo.location = "";
                         // store photo objects
                         photos.add(photo);
                     }

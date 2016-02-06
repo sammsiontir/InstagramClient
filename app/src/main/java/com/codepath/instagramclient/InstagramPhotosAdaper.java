@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
@@ -79,6 +80,14 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
         // Insert model data to each of the items
         viewHolder.tvUsername.setText(photo.username);
         viewHolder.tvLocation.setText("");
+        if (photo.location.isEmpty()) {
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)viewHolder.tvUsername.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+            params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, 0);
+            params.addRule(RelativeLayout.ALIGN_PARENT_START, 0);
+            params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            viewHolder.tvUsername.setLayoutParams(params);
+        }
         CharSequence relativeTime = DateUtils.getRelativeTimeSpanString(photo.createTime*1000, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
         viewHolder.tvTime.setText(relativeTime);
         viewHolder.tvLikes.setText(Integer.toString(photo.likesCount)  + "  Likes");
