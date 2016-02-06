@@ -33,7 +33,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="#000"
         android:minHeight="60dp"
         android:minWidth="60dp"
         android:nestedScrollingEnabled="false"

@@ -8,14 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.List;
 
-/**
- * Created by chengfu_lin on 2/5/16.
- */
 public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
+    private InstagramPhoto photo;
 
     public InstagramPhotosAdaper(Context context, List<InstagramPhoto> objects) {
         super(context, android.R.layout.simple_list_item_1, objects);
@@ -25,7 +25,7 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get data item for this position
-        InstagramPhoto photo = getItem(position);
+        photo = getItem(position);
         // Check if we are using recycle view. If not, we need to inflate
         if(convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_photo, parent, false);
@@ -44,13 +44,36 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
         tvTime.setText("Now");
         tvLikes.setText(Integer.toString(photo.likesCount)  + "  Likes");
         tvCaption.setText(photo.caption);
-        // Clear out the image view
-        ivProfilePicture.setImageResource(0);
-        ivPhoto.setImageResource(0);
         // Insert image view using picasso
-        Picasso.with(getContext()).load(photo.profilePictureUrl).into(ivProfilePicture);
-        Picasso.with(getContext()).load(photo.imageUrl).into(ivPhoto);
+        setProfilePicture(ivProfilePicture);
+        setPhoto(ivPhoto);
         // Return the create item as a view
         return convertView;
+    }
+
+    public void setProfilePicture(ImageView ivProfilePicture) {
+        ivProfilePicture.setImageResource(0);
+        Transformation transformation = new RoundedTransformationBuilder()
+                .borderWidthDp(0)
+                .cornerRadiusDp(30)
+                .oval(false)
+                .build();
+
+        Picasso.with(getContext())
+                .load(photo.profilePictureUrl)
+                .fit()
+                .transform(transformation)
+                .into(ivProfilePicture);
+    }
+
+    public void setPhoto(ImageView ivPhoto) {
+        // Clear current image
+        ivPhoto.setImageResource(0);
+        // Insert image view using picasso
+        Picasso.with(getContext())
+                .load(photo.imageUrl)
+                .fit()
+                .centerInside()
+                .into(ivPhoto);
     }
 }
