@@ -65,6 +65,7 @@ public class PhotosActivity extends AppCompatActivity {
                         InstagramPhoto photo = new InstagramPhoto();
                         // - Author : { "data" => [x] => "user" => "username"}
                         photo.username = photoJSON.getJSONObject("user").getString("username");
+                        photo.profilePictureUrl = photoJSON.getJSONObject("user").getString("profile_picture");
                         // - Type   : { "data" => [x] => "type" } ("image" or "video")
                         // photo.type = photoJSON.getJSONObject("type").getString("text");
                         // - Caption: { "data" => [x] => "caption" }

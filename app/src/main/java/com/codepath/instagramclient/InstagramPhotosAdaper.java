@@ -31,13 +31,24 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_photo, parent, false);
         }
         // Lookup the views for populating the data (image, Caption)
-        TextView tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
+        ImageView ivProfilePicture = (ImageView) convertView.findViewById(R.id.ivProfilePicture);
+        TextView tvUsername = (TextView) convertView.findViewById(R.id.tvUsername);
+        TextView tvLocation = (TextView) convertView.findViewById(R.id.tvLocation);
+        TextView tvTime = (TextView) convertView.findViewById(R.id.tvTime);
         ImageView ivPhoto = (ImageView) convertView.findViewById(R.id.ivPhoto);
+        TextView tvLikes = (TextView) convertView.findViewById(R.id.tvLikes);
+        TextView tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
         // Insert model data to each of the items
+        tvUsername.setText(photo.username);
+        tvLocation.setText("");
+        tvTime.setText("Now");
+        tvLikes.setText(Integer.toString(photo.likesCount)  + "  Likes");
         tvCaption.setText(photo.caption);
         // Clear out the image view
+        ivProfilePicture.setImageResource(0);
         ivPhoto.setImageResource(0);
         // Insert image view using picasso
+        Picasso.with(getContext()).load(photo.profilePictureUrl).into(ivProfilePicture);
         Picasso.with(getContext()).load(photo.imageUrl).into(ivPhoto);
         // Return the create item as a view
         return convertView;
