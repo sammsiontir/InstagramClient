@@ -1,6 +1,7 @@
 package com.codepath.instagramclient;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.squareup.picasso.Transformation;
 import java.util.List;
 
 public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
+    private Context parentContext;
     private InstagramPhoto photo;
 
     public class CropSquareTransformation implements Transformation {
@@ -45,10 +47,12 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
         TextView tvLikes;
         TextView tvCaption;
         ImageView ivLocationIcon;
+        TextView tvViewAllComments;
     }
 
     public InstagramPhotosAdaper(Context context, List<InstagramPhoto> objects) {
         super(context, 0, objects);
+        this.parentContext = context;
     }
 
     // Use the template to display each photo
@@ -72,6 +76,7 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
             viewHolder.tvLikes = (TextView) convertView.findViewById(R.id.tvLikes);
             viewHolder.tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
             viewHolder.ivLocationIcon = (ImageView) convertView.findViewById(R.id.ivLocationIcon);
+            viewHolder.tvViewAllComments = (TextView) convertView.findViewById(R.id.tvViewAllComments);
 
             // Add tag to viewHolder
             convertView.setTag(viewHolder);
@@ -98,10 +103,15 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
             viewHolder.tvLocation.setText(photo.location);
         }
 
-        CharSequence relativeTime = DateUtils.getRelativeTimeSpanString(photo.createTime*1000, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
+        CharSequence relativeTime = DateUtils.getRelativeTimeSpanString(photo.createTime * 1000, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
         viewHolder.tvTime.setText(relativeTime);
-        viewHolder.tvLikes.setText(Integer.toString(photo.likesCount) + "  Likes");
-        viewHolder.tvCaption.setText(photo.caption);
+        viewHolder.tvLikes.setText(String.format("%,d", photo.likesCount) + "  Likes");
+        if(!photo.caption.isEmpty()) {
+            viewHolder.tvCaption.setText(photo.caption);
+        }
+        else {
+            viewHolder.tvCaption.clearComposingText();
+        }
 
         // Insert image view using picasso
         setProfilePicture(viewHolder.ivProfilePicture);
@@ -109,14 +119,35 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
 
         // Add comments to the bottom
         // Initialize components in Comment LinearLayout
+        LinearLayout llButton = (LinearLayout) convertView.findViewById(R.id.llButton);
         LinearLayout llComments = (LinearLayout) convertView.findViewById(R.id.llComments);
         llComments.removeAllViews();
+        // add "View all # comments" if there are more than two comments
+        if (photo.comments.isEmpty()) {
+            llButton.removeAllViews();
+        }
+        else {
+            viewHolder.tvViewAllComments.setText("View all " + String.format("%,d", photo.comments.size()) + " comments");
+
+            viewHolder.tvViewAllComments.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent ViewAllComments = new Intent(parentContext, ViewCommentsActivity.class);
+                    ViewAllComments.putExtra("photo", photo);
+                    parentContext.startActivity(ViewAllComments);
+                }
+            });
+
+
+        }
+
+        // Add latest two comments to the view
         for(int i=0; i < Math.min(2, photo.comments.size()); i++) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             View commentView = inflater.inflate(R.layout.item_comment, null);
             TextView tvCommentUser = (TextView) commentView.findViewById(R.id.tvCommentUser);
             TextView tvCommentText = (TextView) commentView.findViewById(R.id.tvCommentText);
-            tvCommentUser.setText(photo.comments.get(i).username + ":");
+            tvCommentUser.setText(photo.comments.get(i).username);
             tvCommentText.setText(photo.comments.get(i).text);
             llComments.addView(commentView);
         }

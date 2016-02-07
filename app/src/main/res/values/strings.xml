@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Instagram Client</string>
     <string name="title_activity_popular_photos">Popular Photos</string>
+    <string name="title_activity_view_comments">View All Comments</string>
 </resources>

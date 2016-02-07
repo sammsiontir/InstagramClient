@@ -21,6 +21,8 @@ import cz.msebera.android.httpclient.Header;
 
 public class PopularPhotosActivity extends AppCompatActivity {
     public static final String CLIENT_ID = "e05c462ebd86446ea48a5af73769b602";
+    public final int REQUEST_VIEWALLCOMMENTS = 20;
+
     private ArrayList<InstagramPhoto> photos;
     private InstagramPhotosAdaper aPhotos;
     private SwipeRefreshLayout swipeContainer;
@@ -41,6 +43,7 @@ public class PopularPhotosActivity extends AppCompatActivity {
         lvPhotos = (ListView) findViewById(R.id.lvPhotos);
         // Set adapter to the listview
         lvPhotos.setAdapter(aPhotos);
+        lvPhotos.setItemsCanFocus(true);
         // Fetch the Popular Photos
         fetchPopularPhotos();
 
@@ -131,6 +134,9 @@ public class PopularPhotosActivity extends AppCompatActivity {
                         if (photoJSON.optJSONObject("caption") != null) {
                             photo.caption = photoJSON.getJSONObject("caption").getString("text");
                         }
+                        else {
+                            photo.caption = "";
+                        }
 
                         // - Likes count
                         photo.likesCount = photoJSON.getJSONObject("likes").getInt("count");
@@ -173,5 +179,4 @@ public class PopularPhotosActivity extends AppCompatActivity {
             }
         });
     }
-
 }

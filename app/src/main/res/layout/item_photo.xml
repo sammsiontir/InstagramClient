@@ -163,8 +163,9 @@
         android:paddingTop="5dp"
         android:text="Caption..."
         android:id="@+id/tvCaption"
-        android:textSize="20sp"
+        android:textSize="14sp"
         android:maxLines="3"
+        android:textColor="@color/colorUsername"
         android:ellipsize="end"
         android:layout_below="@+id/tvLikes"
         android:layout_alignParentLeft="true"
@@ -181,10 +182,37 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/llButton"
         android:layout_below="@+id/spaceAfterCaption"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvViewAllComments"
+            android:text="View all 10 comments"
+            android:paddingTop="5dp"
+            android:textColor="@color/colorRelativeTime"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/llComments"
+        android:layout_below="@+id/llButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"></LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@+id/llComments"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/llComments"></LinearLayout>
+        android:id="@+id/spaceBottom" />
 
 </RelativeLayout>
