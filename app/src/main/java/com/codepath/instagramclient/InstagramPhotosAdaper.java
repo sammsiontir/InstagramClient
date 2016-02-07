@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -46,8 +47,6 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
         ImageView ivLocationIcon;
     }
 
-
-
     public InstagramPhotosAdaper(Context context, List<InstagramPhoto> objects) {
         super(context, 0, objects);
     }
@@ -63,7 +62,7 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_photo, parent, false);
 
-            // Initialize all the components in layout
+            // Initialize all the components in ListView layout
             viewHolder = new ViewHolder();
             viewHolder.ivProfilePicture = (ImageView) convertView.findViewById(R.id.ivProfilePicture);
             viewHolder.tvUsername = (TextView) convertView.findViewById(R.id.tvUsername);
@@ -73,6 +72,8 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
             viewHolder.tvLikes = (TextView) convertView.findViewById(R.id.tvLikes);
             viewHolder.tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
             viewHolder.ivLocationIcon = (ImageView) convertView.findViewById(R.id.ivLocationIcon);
+
+            // Add tag to viewHolder
             convertView.setTag(viewHolder);
         }
         else {
@@ -99,11 +100,26 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
 
         CharSequence relativeTime = DateUtils.getRelativeTimeSpanString(photo.createTime*1000, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS);
         viewHolder.tvTime.setText(relativeTime);
-        viewHolder.tvLikes.setText(Integer.toString(photo.likesCount)  + "  Likes");
+        viewHolder.tvLikes.setText(Integer.toString(photo.likesCount) + "  Likes");
         viewHolder.tvCaption.setText(photo.caption);
+
         // Insert image view using picasso
         setProfilePicture(viewHolder.ivProfilePicture);
         setPhoto(viewHolder.ivPhoto);
+
+        // Add comments to the bottom
+        // Initialize components in Comment LinearLayout
+        LinearLayout llComments = (LinearLayout) convertView.findViewById(R.id.llComments);
+        llComments.removeAllViews();
+        for(int i=0; i < Math.min(2, photo.comments.size()); i++) {
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            View commentView = inflater.inflate(R.layout.item_comment, null);
+            TextView tvCommentUser = (TextView) commentView.findViewById(R.id.tvCommentUser);
+            TextView tvCommentText = (TextView) commentView.findViewById(R.id.tvCommentText);
+            tvCommentUser.setText(photo.comments.get(i).username + ":");
+            tvCommentText.setText(photo.comments.get(i).text);
+            llComments.addView(commentView);
+        }
         // Return the create item as a view
         return convertView;
     }

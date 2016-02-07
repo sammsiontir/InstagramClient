@@ -5,7 +5,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:id="@+id/space"
+        android:id="@+id/spaceTop"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -18,7 +18,7 @@
         android:minWidth="50dp"
         android:nestedScrollingEnabled="false"
         android:adjustViewBounds="false"
-        android:layout_below="@+id/space"
+        android:layout_below="@+id/spaceTop"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -30,7 +30,7 @@
         android:paddingRight="5dp"
         android:paddingTop="5dp"
         android:id="@+id/rlUserInfo"
-        android:layout_below="@+id/space"
+        android:layout_below="@+id/spaceTop"
         android:layout_toRightOf="@+id/ivProfilePicture"
         android:layout_toEndOf="@+id/ivProfilePicture">
 
@@ -99,7 +99,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:id="@+id/spaceBegin"
+        android:id="@+id/spaceAfterProfile"
         android:layout_below="@+id/ivProfilePicture"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -110,14 +110,14 @@
         android:id="@+id/ivPhoto"
         android:adjustViewBounds="true"
         android:minHeight="250dp"
-        android:layout_below="@+id/spaceBegin"
+        android:layout_below="@+id/spaceAfterProfile"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spaceMiddle"
+        android:layout_height="10dp"
+        android:id="@+id/spaceAfterPhoto"
         android:layout_below="@+id/ivPhoto"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -150,7 +150,7 @@
         android:textColor="@color/colorUsername"
         android:id="@+id/tvLikes"
         android:textSize="14dp"
-        android:layout_below="@+id/spaceMiddle"
+        android:layout_below="@+id/spaceAfterPhoto"
         android:layout_toRightOf="@+id/ivLikesIcon"
         android:layout_toEndOf="@+id/ivLikesIcon" />
 
@@ -172,10 +172,19 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="10dp"
         android:layout_below="@+id/tvCaption"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/spaceEnd" />
+        android:id="@+id/spaceAfterCaption" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/spaceAfterCaption"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/llComments"></LinearLayout>
 
 </RelativeLayout>

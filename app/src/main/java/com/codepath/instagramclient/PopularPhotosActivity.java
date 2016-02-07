@@ -69,7 +69,9 @@ public class PopularPhotosActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // smooth roll back to the first photo
-                lvPhotos.smoothScrollToPosition(0);
+                if (lvPhotos.getPositionForView(view) != 0) {
+                    lvPhotos.smoothScrollToPosition(0);
+                }
             }
         });
     }
