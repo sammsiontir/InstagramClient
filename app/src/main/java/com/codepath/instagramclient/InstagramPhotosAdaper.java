@@ -155,7 +155,7 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
         return convertView;
     }
 
-    public void setProfilePicture(ImageView ivProfilePicture) {
+    protected void setProfilePicture(ImageView ivProfilePicture) {
         ivProfilePicture.setImageResource(0);
         Transformation transformation = new RoundedTransformationBuilder()
                 .borderWidthDp(0)

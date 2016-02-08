@@ -2,7 +2,6 @@ package com.codepath.instagramclient;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -26,13 +25,12 @@ public class ViewCommentsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                btnReturn();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // set listview adapter
+        // set ListView adapter
         photo = (InstagramPhoto) getIntent().getSerializableExtra("photo");
         comments = photo.comments;
         aComment = new InstagramPhotoCommentsAdapter(this, comments);
@@ -42,5 +40,7 @@ public class ViewCommentsActivity extends AppCompatActivity {
     }
 
 
-
+    public void btnReturn() {
+        this.finish();
+    }
 }

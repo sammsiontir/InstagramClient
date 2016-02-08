@@ -20,6 +20,7 @@ public class InstagramPhoto implements Serializable {
         public String text;
         public String username;
         public String id;
+        public String profilePictureUrl;
     }
 
     public class Image implements Serializable {

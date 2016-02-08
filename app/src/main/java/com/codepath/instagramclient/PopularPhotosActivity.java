@@ -21,7 +21,6 @@ import cz.msebera.android.httpclient.Header;
 
 public class PopularPhotosActivity extends AppCompatActivity {
     public static final String CLIENT_ID = "e05c462ebd86446ea48a5af73769b602";
-    public final int REQUEST_VIEWALLCOMMENTS = 20;
 
     private ArrayList<InstagramPhoto> photos;
     private InstagramPhotosAdaper aPhotos;
@@ -45,7 +44,9 @@ public class PopularPhotosActivity extends AppCompatActivity {
         lvPhotos.setAdapter(aPhotos);
         lvPhotos.setItemsCanFocus(true);
         // Fetch the Popular Photos
-        fetchPopularPhotos();
+        if(photos.isEmpty()) {
+            fetchPopularPhotos();
+        }
 
 
         // Lookup the swipe container view
@@ -159,6 +160,7 @@ public class PopularPhotosActivity extends AppCompatActivity {
                             comment.text = commentJSON.getString("text");
                             comment.username = commentJSON.getJSONObject("from").getString("username");
                             comment.id = commentJSON.getString("id");
+                            comment.profilePictureUrl = commentJSON.getJSONObject("from").getString("profile_picture");
                             // store comment object
                             photo.comments.add(comment);
                         }
