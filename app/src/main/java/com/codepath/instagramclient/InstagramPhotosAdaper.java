@@ -19,6 +19,9 @@ import com.squareup.picasso.Transformation;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
     private Context parentContext;
     private InstagramPhoto photo;
@@ -38,16 +41,20 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
         @Override public String key() { return "square()"; }
     }
 
-    private static class ViewHolder {
-        ImageView ivProfilePicture;
-        TextView tvUsername;
-        TextView tvLocation;
-        TextView tvTime;
-        ImageView ivPhoto;
-        TextView tvLikes;
-        TextView tvCaption;
-        ImageView ivLocationIcon;
-        TextView tvViewAllComments;
+    static class ViewHolder {
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+
+        @Bind(R.id.ivProfilePicture) ImageView ivProfilePicture;
+        @Bind(R.id.tvUsername) TextView tvUsername;
+        @Bind(R.id.tvLocation) TextView tvLocation;
+        @Bind(R.id.tvTime) TextView tvTime;
+        @Bind(R.id.ivPhoto) ImageView ivPhoto;
+        @Bind(R.id.tvLikes) TextView tvLikes;
+        @Bind(R.id.tvCaption) TextView tvCaption;
+        @Bind(R.id.ivLocationIcon) ImageView ivLocationIcon;
+        @Bind(R.id.tvViewAllComments) TextView tvViewAllComments;
     }
 
     public InstagramPhotosAdaper(Context context, List<InstagramPhoto> objects) {
@@ -67,17 +74,7 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
             convertView = inflater.inflate(R.layout.item_photo, parent, false);
 
             // Initialize all the components in ListView layout
-            viewHolder = new ViewHolder();
-            viewHolder.ivProfilePicture = (ImageView) convertView.findViewById(R.id.ivProfilePicture);
-            viewHolder.tvUsername = (TextView) convertView.findViewById(R.id.tvUsername);
-            viewHolder.tvLocation = (TextView) convertView.findViewById(R.id.tvLocation);
-            viewHolder.tvTime = (TextView) convertView.findViewById(R.id.tvTime);
-            viewHolder.ivPhoto = (ImageView) convertView.findViewById(R.id.ivPhoto);
-            viewHolder.tvLikes = (TextView) convertView.findViewById(R.id.tvLikes);
-            viewHolder.tvCaption = (TextView) convertView.findViewById(R.id.tvCaption);
-            viewHolder.ivLocationIcon = (ImageView) convertView.findViewById(R.id.ivLocationIcon);
-            viewHolder.tvViewAllComments = (TextView) convertView.findViewById(R.id.tvViewAllComments);
-
+            viewHolder = new ViewHolder(convertView);
             // Add tag to viewHolder
             convertView.setTag(viewHolder);
         }
@@ -124,7 +121,7 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
         llComments.removeAllViews();
         // add "View all # comments" if there are more than two comments
         if (photo.comments.isEmpty()) {
-            llButton.removeAllViews();
+            llButton.removeView(viewHolder.tvViewAllComments);
         }
         else {
             viewHolder.tvViewAllComments.setText("View all " + String.format("%,d", photo.comments.size()) + " comments");

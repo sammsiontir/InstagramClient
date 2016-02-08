@@ -14,13 +14,20 @@ import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class InstagramPhotoCommentsAdapter extends ArrayAdapter<InstagramPhoto.Comment> {
     InstagramPhoto.Comment comment;
 
-    private static class CommentViewHolder {
-        ImageView ivProfilePictureC;
-        TextView tvUsernameC;
-        TextView tvComment;
+    static class CommentViewHolder {
+        public CommentViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+
+        @Bind(R.id.ivProfilePictureC) ImageView ivProfilePictureC;
+        @Bind(R.id.tvUsernameC) TextView tvUsernameC;
+        @Bind(R.id.tvComment) TextView tvComment;
     }
 
     public InstagramPhotoCommentsAdapter(Context context, ArrayList<InstagramPhoto.Comment> comments) {
@@ -36,13 +43,8 @@ public class InstagramPhotoCommentsAdapter extends ArrayAdapter<InstagramPhoto.C
         if(convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_comment_detail, parent, false);
-
             // Initialize all the components in ListView layout
-            commentViewHolder = new CommentViewHolder();
-            commentViewHolder.ivProfilePictureC = (ImageView) convertView.findViewById(R.id.ivProfilePictureC);
-            commentViewHolder.tvUsernameC = (TextView) convertView.findViewById(R.id.tvUsernameC);
-            commentViewHolder.tvComment = (TextView) convertView.findViewById(R.id.tvComment);
-
+            commentViewHolder = new CommentViewHolder(convertView);
             // Add tag to viewHolder
             convertView.setTag(commentViewHolder);
         }

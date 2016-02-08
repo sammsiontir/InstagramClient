@@ -16,7 +16,6 @@
         android:id="@+id/ivProfilePicture"
         android:minHeight="50dp"
         android:minWidth="50dp"
-        android:nestedScrollingEnabled="false"
         android:adjustViewBounds="false"
         android:layout_below="@+id/spaceTop"
         android:layout_alignParentLeft="true"
