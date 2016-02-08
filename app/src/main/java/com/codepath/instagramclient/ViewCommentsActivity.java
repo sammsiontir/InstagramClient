@@ -1,10 +1,8 @@
 package com.codepath.instagramclient;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -21,14 +19,7 @@ public class ViewCommentsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btnReturn();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("All comments ");
 
         // set ListView adapter
         photo = (InstagramPhoto) getIntent().getSerializableExtra("photo");
@@ -37,10 +28,5 @@ public class ViewCommentsActivity extends AppCompatActivity {
 
         ListView lvComments = (ListView) findViewById(R.id.lvComments);
         lvComments.setAdapter(aComment);
-    }
-
-
-    public void btnReturn() {
-        this.finish();
     }
 }

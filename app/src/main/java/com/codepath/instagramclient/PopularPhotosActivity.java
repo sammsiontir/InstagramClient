@@ -33,6 +33,9 @@ public class PopularPhotosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_popular_photos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.instagram_client_launcher);
+        getSupportActionBar().setTitle("  Popular Photos");
 
         // SEND out API request to popular hotos
         photos = new ArrayList<>();

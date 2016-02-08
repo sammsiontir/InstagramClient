@@ -112,6 +112,9 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
 
         // Insert image view using picasso
         setProfilePicture(viewHolder.ivProfilePicture);
+
+
+        // Image or Video
         setPhoto(viewHolder.ivPhoto);
 
         // Add comments to the bottom
@@ -125,7 +128,6 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
         }
         else {
             viewHolder.tvViewAllComments.setText("View all " + String.format("%,d", photo.comments.size()) + " comments");
-
             viewHolder.tvViewAllComments.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -173,6 +175,7 @@ public class InstagramPhotosAdaper extends ArrayAdapter<InstagramPhoto> {
         // Insert image view using picasso
         Picasso.with(getContext())
                 .load(photo.image.url)
+                .placeholder(R.mipmap.instagram_client_launcher)
                 .fit().centerInside()
                 .transform(new CropSquareTransformation())
                 .into(ivPhoto);
